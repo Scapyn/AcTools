@@ -2,7 +2,14 @@
 
 {% block title %}{{ title }}{% endblock %}
 
+ {% block stylesheets %}
+ 	<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+ {% endblock %}
+
 {% block body %}
+
+	<!-- Print Variables : {{ dump() }} -->
+	
 <h1>{{ title }}</h1>
 
 <h2>Comments ({{ comments|length }})</h2>
@@ -14,4 +21,6 @@
 	{% endfor %}
 
 </ul>
+
+<img src="{{ asset('images/2888519.png') }}">
 {% endblock %}

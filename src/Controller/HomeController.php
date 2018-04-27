@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/", name="homepage")
      */
     public function index()
     {
@@ -19,7 +19,7 @@ class HomeController extends Controller
     }
     
     /**
-     * @Route("/news/{news}")
+     * @Route("/news/{news}", name="news_show")
      */
     public function show($news)
     {
@@ -33,6 +33,8 @@ class HomeController extends Controller
             'Bye1',
             'bibiphoque'
         ];
+        
+        // dump($news, $this);
         
         return $this->render('home/show.html.twig', [
             'title' => ucwords(str_replace('-', ' ', $news)),
