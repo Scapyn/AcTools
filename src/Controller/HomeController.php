@@ -27,9 +27,22 @@ class HomeController extends Controller
             'controller_name' => 'HomeController',
         ]);
         */
-        return new Response(sprintf(
+        
+        $AllComments = [
+            'Hello1',
+            'Bye1',
+            'bibiphoque'
+        ];
+        
+        return $this->render('home/show.html.twig', [
+            'title' => ucwords(str_replace('-', ' ', $news)),
+            'comments' => $AllComments,
+        ]);
+        
+        /*return new Response(sprintf(
             'Les dernieres news : %s',
             $news
         ));
+        */
     }
 }
