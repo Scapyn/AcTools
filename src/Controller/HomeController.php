@@ -19,6 +19,14 @@ class HomeController extends Controller
     }
     
     /**
+     * @Route("/admin")
+     */
+    public function admin()
+    {
+        return new Response('<html><body>Admin Page!</body></html>');
+    }
+    
+    /**
      * @Route("/news/{news}", name="news_show")
      */
     public function show($news)
