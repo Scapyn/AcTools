@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="act_user")
  * @ORM\Entity(repositoryClass="App\Repository\ActUserRepository")
  */
-class ActUser implements UserInterface, \Serializable
+class ActUser implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Id()
@@ -58,11 +59,17 @@ class ActUser implements UserInterface, \Serializable
      */
     private $dateCreation;
 
+    /**
+     * @ORM\Column(type="array", length=254)
+     */
+    private $roles;
+
     public function __construct()
     {
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
+        $this->roles = array('ROLE_USER');
     }
     
     public function getId()
@@ -175,13 +182,33 @@ class ActUser implements UserInterface, \Serializable
     
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return $this->roles;
     }
     
     public function eraseCredentials()
     {
     }
+  
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
     
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+    
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+    
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+        
     /** @see \Serializable::serialize() */
     public function serialize()
     {
@@ -191,6 +218,7 @@ class ActUser implements UserInterface, \Serializable
             $this->password,
             // see section on salt below
             // $this->salt,
+            $this->isActive,
         ));
     }
     
@@ -203,6 +231,14 @@ class ActUser implements UserInterface, \Serializable
             $this->password,
             // see section on salt below
             // $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            $this->isActive,
+        ) = unserialize($serialized);
+    }
+
+    public function setRoles(string $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

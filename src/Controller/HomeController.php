@@ -13,8 +13,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = $this->getUser();
+        $nom = $user->getUsername();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'thename' => $nom,
         ]);
     }
     
@@ -55,4 +58,19 @@ class HomeController extends Controller
         ));
         */
     }
+    
+    
+    /**
+     * La route pour se deconnecter.
+     *
+     * Mais celle ci ne doit jamais être executé car symfony l'interceptera avant.
+     *
+     *
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+          throw new \Exception('This should never be reached!');
+    }
+    
 }

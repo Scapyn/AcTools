@@ -1,22 +1,31 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        in_memory:
-            memory:
-                users:
-                    pierre:
-                        password: $2y$12$vhORx6PucVNd76vaSp93mOSJzaXZZsCpgEMhu.Rl21R64kxkvkN0W
-                        roles: 'ROLE_USER'
-                    scapyn:
-                        password: $2y$12$mDS5CDCNJlsonKz3W5WWsu0cZhvw5XGMSq7RZidrtMA1QpAmUuNdC
-                        roles: 'ROLE_ADMIN'
-                    admin:
-                        password: $2y$12$syADAt1B.c./hTt7QpVruOJbI9A9kJ4slC13Cx.XV.HES6VtSLeP6
-                        roles: 'ROLE_ADMIN'
+
     encoders:
-        Symfony\Component\Security\Core\User\User:
-            algorithm: bcrypt
-            cost: 12
+#        Symfony\Component\Security\Core\User\User:
+#            algorithm: bcrypt
+#            cost: 12
+        App\Entity\ActUser:
+             algorithm: bcrypt
+             
+    providers:
+#        in_memory:
+#            memory:
+#                users:
+#                    pierre:
+#                        password: $2y$12$vhORx6PucVNd76vaSp93mOSJzaXZZsCpgEMhu.Rl21R64kxkvkN0W
+#                        roles: 'ROLE_USER'
+#                    scapyn:
+#                        password: $2y$12$mDS5CDCNJlsonKz3W5WWsu0cZhvw5XGMSq7RZidrtMA1QpAmUuNdC
+#                        roles: 'ROLE_ADMIN'
+#                    admin:
+#                        password: $2y$12$syADAt1B.c./hTt7QpVruOJbI9A9kJ4slC13Cx.XV.HES6VtSLeP6
+#                        roles: 'ROLE_ADMIN'
+        our_db_provider:
+            entity:
+                class: App\Entity\ActUser
+                property: username
+                
     firewalls:
 #        secured_area:
 #            logout:
@@ -26,8 +35,13 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern:    ^/
             anonymous: ~
             http_basic: ~
+            provider: our_db_provider
+            logout:
+                path:    /logout
+                target:  /
 
             # activate different ways to authenticate
 
