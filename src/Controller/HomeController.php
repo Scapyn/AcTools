@@ -13,11 +13,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = $this->getUser();
-        $nom = $user->getUsername();
+//         $user = $this->getUser();
+//         $nom = $user->getUsername();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'thename' => $nom,
+//             'thename' => $nom,
         ]);
     }
     

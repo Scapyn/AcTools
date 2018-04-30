@@ -219,6 +219,7 @@ class ActUser implements AdvancedUserInterface, \Serializable
             // see section on salt below
             // $this->salt,
             $this->isActive,
+            $this->email,
         ));
     }
     
@@ -232,6 +233,7 @@ class ActUser implements AdvancedUserInterface, \Serializable
             // see section on salt below
             // $this->salt
             $this->isActive,
+            $this->email,
         ) = unserialize($serialized);
     }
 

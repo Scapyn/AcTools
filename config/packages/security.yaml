@@ -27,22 +27,20 @@ security:
                 property: username
                 
     firewalls:
-#        secured_area:
-#            logout:
-#                path:    /logout
-#                target:  /
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             pattern:    ^/
             anonymous: ~
-            http_basic: ~
+            form_login:
+                login_path: login
+                check_path: login
             provider: our_db_provider
             logout:
-                path:    /logout
-                target:  /
-
+                path:   /logout
+                target: /admin
+  
             # activate different ways to authenticate
 
             # http_basic: true
