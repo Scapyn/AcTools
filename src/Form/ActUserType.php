@@ -15,12 +15,30 @@ class ActUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('email', EmailType::class)
-        ->add('username', TextType::class)
+        ->add('firstname', TextType::class, array (
+            'label' => 'Prenom',
+            'attr' => array(
+                'placeholder' => 'Prenom'
+            )))
+        ->add('lastname', TextType::class, array (
+            'label' => 'Nom',
+            'attr' => array(
+                'placeholder' => 'Nom'
+            )))
+        ->add('email', EmailType::class, array(
+                'label' => 'Email',
+                'attr' => array(
+                    'placeholder' => 'Email'
+        )))
+        ->add('username', TextType::class, array (
+                'label' => 'Nom utilisateur', 
+                'attr' => array(
+                    'placeholder' => 'Nom d utilisateur'
+        )))
         ->add('password', RepeatedType::class, array(
             'type' => PasswordType::class,
-            'first_options'  => array('label' => 'Password'),
-            'second_options' => array('label' => 'Repeat Password'),
+            'first_options'  => array('label' => 'Mot de passe'),
+            'second_options' => array('label' => 'Mot de passe - Confirmation'),
         ))
         ;
     }

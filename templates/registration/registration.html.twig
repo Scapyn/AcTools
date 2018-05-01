@@ -1,10 +1,43 @@
 {# templates/registration/register.html.twig #}
+{% extends 'base.html.twig' %}
 
+{% block title %}AcTools:Inscription{% endblock %}
+{% block head_css %}{% endblock %}
+{% block stylesheets %}<link href="{{ asset('css/style.css') }}" rel="stylesheet"/>{% endblock %}
+
+{% block body %}
 {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.password.first) }}
-    {{ form_row(form.password.second) }}
-
+    <div>
+        <label for="firstname">{{ form_label(form.firstname) }}</label>
+        <div style="margin: 0;padding: 0;">{{ form_errors(form.firstname) }}
+        {{ form_widget(form.firstname) }}</div>
+    </div>
+    <div>
+        <label for="lastname">{{ form_label(form.lastname) }}</label>
+        <div>{{ form_errors(form.lastname) }}
+        {{ form_widget(form.lastname) }}</div>
+    </div>
+    <div>
+        <label for="username">{{ form_label(form.username) }}</label>
+        <div>{{ form_errors(form.username) }}
+        {{ form_widget(form.username) }}</div>
+    </div>
+    <div>
+        <label for="email">{{ form_label(form.email) }}</label>
+        <div>{{ form_errors(form.email) }}
+        {{ form_widget(form.email) }}</div>
+    </div>
+    <div>
+        <label for="password.first">{{ form_label(form.password.first) }}</label>
+        <div>{{ form_errors(form.password.first) }}
+        {{ form_widget(form.password.first) }}</div>
+    </div>
+    <div>
+        <label for="password.second">{{ form_label(form.password.second) }}</label>
+        <div>{{ form_errors(form.password.second) }}
+        {{ form_widget(form.password.second) }}</div>
+    </div>
+  
     <button type="submit">Register!</button>
 {{ form_end(form) }}
+{% endblock %}
