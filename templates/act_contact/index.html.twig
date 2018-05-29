@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ActContact index{% endblock %}
+
+{% block body %}
+    <h1>ActContact index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contact</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for act_contact in act_contacts %}
+            <tr>
+                <td>{{ act_contact.id }}</td>
+                <td>{{ act_contact.contact }}</td>
+                <td>{{ act_contact.type }}</td>
+                <td>
+                    <a href="{{ path('act_contact_show', {'id': act_contact.id}) }}">show</a>
+                    <a href="{{ path('act_contact_edit', {'id': act_contact.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('act_contact_new') }}">Create new</a>
+{% endblock %}
