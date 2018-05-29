@@ -6,6 +6,8 @@ use App\Entity\ActPerson;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\ActUser;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ActPerson1Type extends AbstractType
 {
@@ -18,6 +20,19 @@ class ActPerson1Type extends AbstractType
             ->add('job')
             ->add('firstname')
             ->add('lastname')
+            
+/*            ->add('actUsers', EntityType::class, array(
+                // looks for choices from this entity
+                'class' => ActUser::class,
+                
+                // uses the User.username property as the visible option string
+                'choice_label' => 'username',
+                
+                // used to render a select box, check boxes or radios
+                // 'multiple' => true,
+                // 'expanded' => true,
+            ))
+*/  
         ;
     }
 
