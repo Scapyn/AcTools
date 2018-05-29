@@ -31,6 +31,11 @@ class ActDocument
      */
     private $comment;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ActUser", inversedBy="actDocuments")
+     */
+    private $actUsers;
+
     public function getId()
     {
         return $this->id;
@@ -68,6 +73,18 @@ class ActDocument
     public function setComment(?string $comment): self
     {
         $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getActUsers(): ?ActUser
+    {
+        return $this->actUsers;
+    }
+
+    public function setActUsers(?ActUser $actUsers): self
+    {
+        $this->actUsers = $actUsers;
 
         return $this;
     }

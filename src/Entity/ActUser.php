@@ -71,6 +71,11 @@ class ActUser implements AdvancedUserInterface, \Serializable
      */
     private $actPersons;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ActDocument", mappedBy="actUsers")
+     */
+    private $actDocuments;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -78,6 +83,7 @@ class ActUser implements AdvancedUserInterface, \Serializable
         // $this->salt = md5(uniqid('', true));
         $this->roles = array('ROLE_USER');
         $this->actPersons = new ArrayCollection();
+        $this->actDocuments = new ArrayCollection();
     }
     
     public function getId()
@@ -275,6 +281,37 @@ class ActUser implements AdvancedUserInterface, \Serializable
         if ($this->actPersons->contains($actPerson)) {
             $this->actPersons->removeElement($actPerson);
             $actPerson->removeactUsers($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActDocument[]
+     */
+    public function getActDocuments(): Collection
+    {
+        return $this->actDocuments;
+    }
+
+    public function addActDocument(ActDocument $actDocument): self
+    {
+        if (!$this->actDocuments->contains($actDocument)) {
+            $this->actDocuments[] = $actDocument;
+            $actDocument->setActUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActDocument(ActDocument $actDocument): self
+    {
+        if ($this->actDocuments->contains($actDocument)) {
+            $this->actDocuments->removeElement($actDocument);
+            // set the owning side to null (unless already changed)
+            if ($actDocument->getActUsers() === $this) {
+                $actDocument->setActUsers(null);
+            }
         }
 
         return $this;
