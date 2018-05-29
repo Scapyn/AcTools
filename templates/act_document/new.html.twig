@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ActDocument{% endblock %}
+
+{% block body %}
+    <h1>Create new ActDocument</h1>
+
+    {{ include('act_document/_form.html.twig') }}
+
+    <a href="{{ path('act_document_index') }}">back to list</a>
+{% endblock %}

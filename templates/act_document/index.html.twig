@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ActDocument index{% endblock %}
+
+{% block body %}
+    <h1>ActDocument index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Comment</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for act_document in act_documents %}
+            <tr>
+                <td>{{ act_document.id }}</td>
+                <td>{{ act_document.name }}</td>
+                <td>{{ act_document.type }}</td>
+                <td>{{ act_document.comment }}</td>
+                <td>
+                    <a href="{{ path('act_document_show', {'id': act_document.id}) }}">show</a>
+                    <a href="{{ path('act_document_edit', {'id': act_document.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('act_document_new') }}">Create new</a>
+{% endblock %}
