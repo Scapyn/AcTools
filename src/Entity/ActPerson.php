@@ -53,6 +53,11 @@ class ActPerson
      */
     private $actUsers;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ActContact", mappedBy="person", cascade={"persist", "remove"})
+     */
+    private $actContact;
+
     public function __construct()
     {
         $this->actUsers = new ArrayCollection();
@@ -156,6 +161,23 @@ class ActPerson
     {
         if ($this->actUsers->contains($actUsers)) {
             $this->actUsers->removeElement($actUsers);
+        }
+
+        return $this;
+    }
+
+    public function getActContact(): ?ActContact
+    {
+        return $this->actContact;
+    }
+
+    public function setActContact(ActContact $actContact): self
+    {
+        $this->actContact = $actContact;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $actContact->getPerson()) {
+            $actContact->setPerson($this);
         }
 
         return $this;

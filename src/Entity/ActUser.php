@@ -76,6 +76,11 @@ class ActUser implements AdvancedUserInterface, \Serializable
      */
     private $actDocuments;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ActContact", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $actContact;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -312,6 +317,23 @@ class ActUser implements AdvancedUserInterface, \Serializable
             if ($actDocument->getActUsers() === $this) {
                 $actDocument->setActUsers(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getActContact(): ?ActContact
+    {
+        return $this->actContact;
+    }
+
+    public function setActContact(ActContact $actContact): self
+    {
+        $this->actContact = $actContact;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $actContact->getUser()) {
+            $actContact->setUser($this);
         }
 
         return $this;
