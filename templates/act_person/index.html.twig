@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ActPerson index{% endblock %}
+
+{% block body %}
+    <h1>ActPerson index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>IsHuman</th>
+                <th>Comment</th>
+                <th>Job</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for act_person in act_people %}
+            <tr>
+                <td>{{ act_person.id }}</td>
+                <td>{{ act_person.name }}</td>
+                <td>{{ act_person.isHuman ? 'Yes' : 'No' }}</td>
+                <td>{{ act_person.comment }}</td>
+                <td>{{ act_person.job ? act_person.job|join(', ') : '' }}</td>
+                <td>{{ act_person.firstname }}</td>
+                <td>{{ act_person.lastname }}</td>
+                <td>
+                    <a href="{{ path('act_person_show', {'id': act_person.id}) }}">show</a>
+                    <a href="{{ path('act_person_edit', {'id': act_person.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('act_person_new') }}">Create new</a>
+{% endblock %}

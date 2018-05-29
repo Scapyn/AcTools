@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ActPerson{% endblock %}
+
+{% block body %}
+    <h1>ActPerson</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ act_person.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ act_person.name }}</td>
+            </tr>
+            <tr>
+                <th>IsHuman</th>
+                <td>{{ act_person.isHuman ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ act_person.comment }}</td>
+            </tr>
+            <tr>
+                <th>Job</th>
+                <td>{{ act_person.job ? act_person.job|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ act_person.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ act_person.lastname }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('act_person_index') }}">back to list</a>
+
+    <a href="{{ path('act_person_edit', {'id': act_person.id}) }}">edit</a>
+
+    {{ include('act_person/_delete_form.html.twig') }}
+{% endblock %}
