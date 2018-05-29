@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -64,12 +66,18 @@ class ActUser implements AdvancedUserInterface, \Serializable
      */
     private $roles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ActPerson", mappedBy="actUsers")
+     */
+    private $actPersons;
+
     public function __construct()
     {
         $this->isActive = true;
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
         $this->roles = array('ROLE_USER');
+        $this->actPersons = new ArrayCollection();
     }
     
     public function getId()
@@ -240,6 +248,34 @@ class ActUser implements AdvancedUserInterface, \Serializable
     public function setRoles(string $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActPerson[]
+     */
+    public function getActPersons(): Collection
+    {
+        return $this->actPersons;
+    }
+
+    public function addActPerson(ActPerson $actPerson): self
+    {
+        if (!$this->actPersons->contains($actPerson)) {
+            $this->actPersons[] = $actPerson;
+            $actPerson->addactUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActPerson(ActPerson $actPerson): self
+    {
+        if ($this->actPersons->contains($actPerson)) {
+            $this->actPersons->removeElement($actPerson);
+            $actPerson->removeactUsers($this);
+        }
 
         return $this;
     }

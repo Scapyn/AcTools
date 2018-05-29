@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,16 @@ class ActPerson
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastname;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ActUser", inversedBy="actPersons")
+     */
+    private $actUsers;
+
+    public function __construct()
+    {
+        $this->actUsers = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -119,6 +131,32 @@ class ActPerson
     public function setLastname(?string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActUser[]
+     */
+    public function getactUsers(): Collection
+    {
+        return $this->actUsers;
+    }
+
+    public function addactUsers(ActUser $actUsers): self
+    {
+        if (!$this->actUsers->contains($actUsers)) {
+            $this->actUsers[] = $actUsers;
+        }
+
+        return $this;
+    }
+
+    public function removeactUsers(ActUser $actUsers): self
+    {
+        if ($this->actUsers->contains($actUsers)) {
+            $this->actUsers->removeElement($actUsers);
+        }
 
         return $this;
     }
