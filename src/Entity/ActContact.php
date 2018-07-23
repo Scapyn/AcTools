@@ -89,5 +89,5 @@ class ActContact
         $this->user = $user;
 
         return $this;
-    }
+    }    
 }
