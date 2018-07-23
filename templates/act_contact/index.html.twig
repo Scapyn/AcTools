@@ -11,8 +11,10 @@
                 <th>Id</th>
                 <th>Contact</th>
                 <th>Type</th>
+                <th>Person</th>
+ 				<th>User</th>
                 <th>actions</th>
-            </tr>
+          </tr>
         </thead>
         <tbody>
         {% for act_contact in act_contacts %}
@@ -20,6 +22,8 @@
                 <td>{{ act_contact.id }}</td>
                 <td>{{ act_contact.contact }}</td>
                 <td>{{ act_contact.type }}</td>
+                <td>{{ act_contact.person.name }}</td>
+                <td>{{ act_contact.user.username }}</td>
                 <td>
                     <a href="{{ path('act_contact_show', {'id': act_contact.id}) }}">show</a>
                     <a href="{{ path('act_contact_edit', {'id': act_contact.id}) }}">edit</a>

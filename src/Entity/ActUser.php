@@ -338,4 +338,5 @@ class ActUser implements AdvancedUserInterface, \Serializable
 
         return $this;
     }
+     
 }

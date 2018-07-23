@@ -3,7 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\ActPerson;
-use App\Form\ActPerson1Type;
+//use App\Form\ActPerson1Type;
+use App\Form\ActPersonType;
 use App\Repository\ActPersonRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +30,7 @@ class ActPersonController extends Controller
     public function new(Request $request): Response
     {
         $actPerson = new ActPerson();
-        $form = $this->createForm(ActPerson1Type::class, $actPerson);
+        $form = $this->createForm(ActPersonType::class, $actPerson);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,7 +60,8 @@ class ActPersonController extends Controller
      */
     public function edit(Request $request, ActPerson $actPerson): Response
     {
-        $form = $this->createForm(ActPerson1Type::class, $actPerson);
+        // $form = $this->createForm(ActPersonType::class, $actPerson);
+        $form = $this->createForm(ActPersonType::class, $actPerson);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
