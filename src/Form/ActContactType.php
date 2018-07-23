@@ -34,8 +34,8 @@ class ActContactType extends AbstractType
             // used to render a select box, check boxes or radios
             // 'multiple' => true,
             // 'expanded' => true,
-        ))
-        ->add('user', EntityType::class, array(
+            ))
+            ->add('user', EntityType::class, array(
             // looks for choices from this entity
             'class' => ActUser::class,
             
@@ -45,7 +45,7 @@ class ActContactType extends AbstractType
             // used to render a select box, check boxes or radios
             // 'multiple' => true,
             // 'expanded' => true,
-        ))
+            ))
         ;
     }
 

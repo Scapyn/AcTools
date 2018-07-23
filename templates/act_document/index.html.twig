@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Type</th>
                 <th>Comment</th>
+                <th>User</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +23,13 @@
                 <td>{{ act_document.name }}</td>
                 <td>{{ act_document.type }}</td>
                 <td>{{ act_document.comment }}</td>
+
+                {% if act_document.actUsers == null %}
+    			<td>--null--</td>
+    			{% else %}
+    			<td>{{ act_document.actUsers.username }}</td>
+                {% endif %}
+
                 <td>
                     <a href="{{ path('act_document_show', {'id': act_document.id}) }}">show</a>
                     <a href="{{ path('act_document_edit', {'id': act_document.id}) }}">edit</a>
