@@ -81,6 +81,11 @@ class ActUser implements AdvancedUserInterface, \Serializable
      */
     private $actContact;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\ActMail", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $actMail;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -334,6 +339,23 @@ class ActUser implements AdvancedUserInterface, \Serializable
         // set the owning side of the relation if necessary
         if ($this !== $actContact->getUser()) {
             $actContact->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getActMail(): ?ActMail
+    {
+        return $this->actMail;
+    }
+
+    public function setActMail(ActMail $actMail): self
+    {
+        $this->actMail = $actMail;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $actMail->getUser()) {
+            $actMail->setUser($this);
         }
 
         return $this;
