@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class ActContact
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ActMail", mappedBy="contact")
+     */
+    private $actMails;
+
+    public function __construct()
+    {
+        $this->actMails = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -87,6 +99,34 @@ class ActContact
     public function setUser(ActUser $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActMail[]
+     */
+    public function getActMails(): Collection
+    {
+        return $this->actMails;
+    }
+
+    public function addActMail(ActMail $actMail): self
+    {
+        if (!$this->actMails->contains($actMail)) {
+            $this->actMails[] = $actMail;
+            $actMail->addContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActMail(ActMail $actMail): self
+    {
+        if ($this->actMails->contains($actMail)) {
+            $this->actMails->removeElement($actMail);
+            $actMail->removeContact($this);
+        }
 
         return $this;
     }    

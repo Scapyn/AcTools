@@ -44,9 +44,15 @@ class ActMail
      */
     private $documents;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ActContact", inversedBy="actMails")
+     */
+    private $contact;
+
     public function __construct()
     {
         $this->documents = new ArrayCollection();
+        $this->contact = new ArrayCollection();
     }
 
     public function getId()
@@ -123,6 +129,32 @@ class ActMail
     {
         if ($this->documents->contains($document)) {
             $this->documents->removeElement($document);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActContact[]
+     */
+    public function getContact(): Collection
+    {
+        return $this->contact;
+    }
+
+    public function addContact(ActContact $contact): self
+    {
+        if (!$this->contact->contains($contact)) {
+            $this->contact[] = $contact;
+        }
+
+        return $this;
+    }
+
+    public function removeContact(ActContact $contact): self
+    {
+        if ($this->contact->contains($contact)) {
+            $this->contact->removeElement($contact);
         }
 
         return $this;
