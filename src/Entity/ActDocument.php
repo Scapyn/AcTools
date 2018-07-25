@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,16 @@ class ActDocument
      * @ORM\ManyToOne(targetEntity="App\Entity\ActUser", inversedBy="actDocuments")
      */
     private $actUsers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ActMail", mappedBy="documents")
+     */
+    private $actMails;
+
+    public function __construct()
+    {
+        $this->actMails = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -85,6 +97,34 @@ class ActDocument
     public function setActUsers(?ActUser $actUsers): self
     {
         $this->actUsers = $actUsers;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActMail[]
+     */
+    public function getActMails(): Collection
+    {
+        return $this->actMails;
+    }
+
+    public function addActMail(ActMail $actMail): self
+    {
+        if (!$this->actMails->contains($actMail)) {
+            $this->actMails[] = $actMail;
+            $actMail->addDocument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActMail(ActMail $actMail): self
+    {
+        if ($this->actMails->contains($actMail)) {
+            $this->actMails->removeElement($actMail);
+            $actMail->removeDocument($this);
+        }
 
         return $this;
     }

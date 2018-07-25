@@ -15,7 +15,7 @@ class ActMailType extends AbstractType
             ->add('description')
             ->add('date')
             ->add('type')
-            ->add('user')
+            //->add('user')
         ;
     }
 

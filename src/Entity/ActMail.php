@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,10 +34,20 @@ class ActMail
     private $type;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ActUser", inversedBy="actMail", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\ActUser", inversedBy="actMails")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ActDocument", inversedBy="actMails")
+     */
+    private $documents;
+
+    public function __construct()
+    {
+        $this->documents = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -44,12 +56,12 @@ class ActMail
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
@@ -83,9 +95,35 @@ class ActMail
         return $this->user;
     }
 
-    public function setUser(ActUser $user): self
+    public function setUser(?ActUser $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ActDocument[]
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(ActDocument $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents[] = $document;
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(ActDocument $document): self
+    {
+        if ($this->documents->contains($document)) {
+            $this->documents->removeElement($document);
+        }
 
         return $this;
     }

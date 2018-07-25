@@ -82,9 +82,9 @@ class ActUser implements AdvancedUserInterface, \Serializable
     private $actContact;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ActMail", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\ActMail", mappedBy="user")
      */
-    private $actMail;
+    private $actMails;
 
     public function __construct()
     {
@@ -94,6 +94,7 @@ class ActUser implements AdvancedUserInterface, \Serializable
         $this->roles = array('ROLE_USER');
         $this->actPersons = new ArrayCollection();
         $this->actDocuments = new ArrayCollection();
+        $this->actMails = new ArrayCollection();
     }
     
     public function getId()
@@ -344,21 +345,34 @@ class ActUser implements AdvancedUserInterface, \Serializable
         return $this;
     }
 
-    public function getActMail(): ?ActMail
+    /**
+     * @return Collection|ActMail[]
+     */
+    public function getActMails(): Collection
     {
-        return $this->actMail;
+        return $this->actMails;
     }
 
-    public function setActMail(ActMail $actMail): self
+    public function addActMail(ActMail $actMail): self
     {
-        $this->actMail = $actMail;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $actMail->getUser()) {
+        if (!$this->actMails->contains($actMail)) {
+            $this->actMails[] = $actMail;
             $actMail->setUser($this);
         }
 
         return $this;
     }
-     
+
+    public function removeActMail(ActMail $actMail): self
+    {
+        if ($this->actMails->contains($actMail)) {
+            $this->actMails->removeElement($actMail);
+            // set the owning side to null (unless already changed)
+            if ($actMail->getUser() === $this) {
+                $actMail->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 }
