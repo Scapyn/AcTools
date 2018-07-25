@@ -16,7 +16,7 @@ class ActDocument
      */
     private $id;
 
-    /**
+     /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -31,7 +31,7 @@ class ActDocument
      */
     private $comment;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ActUser", inversedBy="actDocuments")
      */
     private $actUsers;

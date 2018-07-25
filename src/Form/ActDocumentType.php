@@ -30,7 +30,6 @@ class ActDocumentType extends AbstractType
                 // 'multiple' => true,
                 // 'expanded' => true,
             ))
-            
         ;
     }
 
